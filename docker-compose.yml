@@ -1,0 +1,24 @@
+version: '3'
+services:
+  unstructured-api:
+    image: quay.io/unstructured-io/unstructured-api:0.0.61
+    networks:
+      - mynetwork
+
+  jupyter-lab:
+    image: rer_ml_jupyterlab:latest
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+    volumes:
+      - $HOME/projects:/home/jovyan/projects
+    command: ["start-notebook.py", "--NotebookApp.token=''", "--no-browser", "--ip=0.0.0.0"]
+    ports:
+      - "8888:8888"
+    depends_on:
+      - unstructured-api
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
