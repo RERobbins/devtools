@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/pytorch-notebook:2023-12-25
+From quay.io/jupyter/pytorch-notebook:2023-12-25
 
 LABEL maintainer="Richard Robbins"
 
@@ -14,7 +14,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get remove -y --purge build-essential && \
-    apt-get autoremove -y &&
+    apt-get autoremove -y && \
     rm -rf /tmp/*
 
 
