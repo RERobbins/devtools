@@ -1,8 +1,8 @@
 build_rer_ml_jupyterlab() {
     local DATE_TAG=$(date +%Y-%m-%d)
     docker build \
-	   -t "rer_ml_jupyterlab:$DATE_TAG" \
-	   -t "rer_ml_jupyterlab:latest" \
+	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:$DATE_TAG" \
+	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:latest" \
 	   $HOME/projects/other/devtools
 }
 

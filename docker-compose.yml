@@ -6,7 +6,7 @@ services:
       - mynetwork
 
   jupyter-lab:
-    image: rer_ml_jupyterlab:latest
+    image: quay.io/robbins/devtools/rer_ml_jupyterlab:2023-12-31
     user: root
     environment:
       - GRANT_SUDO=yes
