@@ -54,4 +54,6 @@ RUN conda clean -afy && \
     fix-permissions /home/$NB_USER
 
 # Switch back to the jovyan (or default) user
+# Create a projects folder in lieu of the work folder
 USER $NB_USER
+RUN mkdir /home/$NB_USER/projects

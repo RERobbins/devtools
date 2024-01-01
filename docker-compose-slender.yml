@@ -1,7 +1,7 @@
 version: '3'
 services:
   jupyter-lab:
-    image: quay.io/robbins/devtools/rer_ml_jupyterlab:2023-12-31
+    image: quay.io/robbins/devtools/rer_ml_jupyterlab:latest
     user: root
     environment:
       - GRANT_SUDO=yes
