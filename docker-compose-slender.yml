@@ -1,0 +1,12 @@
+version: '3'
+services:
+  jupyter-lab:
+    image: quay.io/robbins/devtools/rer_ml_jupyterlab:2023-12-31
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+    volumes:
+      - $HOME/projects:/home/jovyan/projects
+    command: ["start-notebook.py", "--NotebookApp.token=''", "--no-browser", "--ip=0.0.0.0"]
+    ports:
+      - "8888:8888"
