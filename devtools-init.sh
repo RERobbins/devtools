@@ -5,7 +5,6 @@
 #	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:$DATE_TAG" \
 #	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:latest" \
 #	   --push \
-#	   --push \
 #	   $HOME/projects/other/devtools
 #    docker build \
 #	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:$DATE_TAG" \
@@ -20,7 +19,6 @@ build_rer_ml_jupyterlab() {
     # Determine the build command based on whether we're pushing to registry or saving locally
     if [ "$push_to_registry" = true ] ; then
         # Using buildx to build and push for multi-platform images
-        docker buildx create --use
         docker buildx build \
            --platform linux/amd64,linux/arm64 \
            -t "quay.io/robbins/devtools/rer_ml_jupyterlab:$DATE_TAG" \

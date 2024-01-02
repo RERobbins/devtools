@@ -49,11 +49,8 @@ RUN for env_name in $env_names; do \
 # Clean up Conda, pip cache, and fix permissions
 RUN conda clean -afy && \
     rm -rf /root/.cache/pip && \
-    rm -rf /home/$NB_USER/work && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
 # Switch back to the jovyan (or default) user
-# Create a projects folder in lieu of the work folder
 USER $NB_USER
-RUN mkdir /home/$NB_USER/projects
