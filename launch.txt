@@ -1,0 +1,14 @@
+******************************************************************************************	
+docker run -d --rm \
+	--name jupyter-lab \
+    -p 8888:8888 \
+    -v /home/rerobbins/projects:/home/jovyan/work \
+	--user root \
+	-e GRANT_SUDO=yes \
+	-e NB_UID=$(id -u) \
+	-e NB_GID=$(id -g) \
+    -e CHOWN_EXTRA="/home/jovyan/work" \
+    -e CHOWN_EXTRA_OPTS="-R" \
+    quay.io/robbins/devtools/rer_ml_jupyterlab:latest \
+	start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+	

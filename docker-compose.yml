@@ -6,20 +6,20 @@ services:
       - mynetwork
 
   jupyter-lab:
+    container_name: jupyter-lab
     image: quay.io/robbins/devtools/rer_ml_jupyterlab:latest
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+    ports:
+      - "8888:8888"
+    volumes:
+      - /home/rerobbins/projects:/home/jovyan/work
     user: root
     environment:
       - GRANT_SUDO=yes
-      - NB_UID=${NB_UID}
-      - NB_GID=${NB_GID}
-      - CHOWN_HOME=yes
-    volumes:
-      - $HOME/projects:/home/jovyan/work/projects
-    command: ["start-notebook.py", "--NotebookApp.token=''", "--no-browser", "--ip=0.0.0.0"]
-    ports:
-      - "8888:8888"
-    depends_on:
-      - unstructured-api
+      - NB_UID=1000
+      - NB_GID=1000
+      - CHOWN_EXTRA=/home/jovyan/work
+      - CHOWN_EXTRA_OPTS=-R
     networks:
       - mynetwork
 

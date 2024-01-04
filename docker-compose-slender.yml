@@ -1,15 +1,18 @@
-version: '3'
+version: '3.8'
+
 services:
   jupyter-lab:
+    container_name: jupyter-lab
     image: quay.io/robbins/devtools/rer_ml_jupyterlab:latest
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+    ports:
+      - "8888:8888"
+    volumes:
+      - /home/rerobbins/projects:/home/jovyan/work
     user: root
     environment:
       - GRANT_SUDO=yes
-      - CHOWN_HOME=yes
-      - NB_UID=${NB_UID}
-      - NB_GID=${NB_GID}
-    volumes:
-      - $HOME/projects:/home/jovyan/work/projects
-    command: ["start-notebook.py", "--NotebookApp.token=''", "--no-browser", "--ip=0.0.0.0"]
-    ports:
-      - "8888:8888"
+      - NB_UID=1000
+      - NB_GID=1000
+      - CHOWN_EXTRA=/home/jovyan/work
+      - CHOWN_EXTRA_OPTS=-R
