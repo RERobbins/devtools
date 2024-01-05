@@ -2,8 +2,16 @@ From quay.io/jupyter/pytorch-notebook:2023-12-25
 
 LABEL maintainer="Richard Robbins"
 
-# Set user to root to install packages and Python environments
 USER root
+
+# Copy your entry script into the container
+COPY entry.sh /entry.sh
+
+# Make the entry script executable
+RUN chmod +x /entry.sh
+
+# Set the entry point to your script
+ENTRYPOINT ["/entry.sh"]
 
 # Update the system and install necessary packages
 RUN apt-get update && \
@@ -16,7 +24,6 @@ RUN apt-get update && \
     apt-get remove -y --purge build-essential && \
     apt-get autoremove -y && \
     rm -rf /tmp/*
-
 
 # Copy requirements.txt into the image
 COPY requirements.txt /tmp/requirements.txt

@@ -4,6 +4,7 @@ services:
   jupyter-lab:
     container_name: jupyter-lab
     image: quay.io/robbins/devtools/rer_ml_jupyterlab:latest
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
     ports:
       - "8888:8888"
     volumes:
@@ -11,3 +12,7 @@ services:
     user: root
     environment:
       - GRANT_SUDO=yes
+      - NB_UID=1000
+      - NB_GID=100
+      - CHOWN_EXTRA=/home/jovyan/projects
+      - CHOWN_EXTRA_OPTS=-R
