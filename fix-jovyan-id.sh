@@ -27,6 +27,4 @@ if [ "$HOST_GID" != "100" ]; then
 fi
 
 # Change ownership of /home/jovyan to the newly mapped UID and primary GID
-chown -R jovyan:$HOST_GID /home/jovyan
-
-
+chown jovyan:$HOST_GID /home/jovyan
