@@ -1,17 +1,3 @@
-#build_rer_ml_jupyterlab() {
-#    local DATE_TAG=$(date +%Y-%m-%d)
-#    docker buildx build \
-#	   --platform linux/amd64,linux/arm64 \
-#	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:$DATE_TAG" \
-#	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:latest" \
-#	   --push \
-#	   $HOME/projects/other/devtools
-#    docker build \
-#	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:$DATE_TAG" \
-#	   -t "quay.io/robbins/devtools/rer_ml_jupyterlab:latest" \
-#	   $HOME/projects/other/devtools
-#}
-
 build_rer_ml_jupyterlab() {
     local DATE_TAG=$(date +%Y-%m-%d)
     local push_to_registry=${1:-true} # Default is true for pushing to the registry
