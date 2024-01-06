@@ -1,30 +1,30 @@
 #!/bin/bash
-set -e
 
-# Get the HOST_UID and HOST_GID environment variables (if set)
-HOST_UID=${HOST_UID:-1000}
-HOST_GID=${HOST_GID:-100}
+# Set default values for HOST_UID and HOST_GID
+DEFAULT_UID=1000
+DEFAULT_GID=100
 
-# Map the host user's UID to match the jovyan user inside the container
-if [ "$HOST_UID" != "1000" ]; then
+# Read HOST_UID and HOST_GID from environment with defaults
+HOST_UID=${HOST_UID:-$DEFAULT_UID}
+HOST_GID=${HOST_GID:-$DEFAULT_GID}
+
+# Get current jovyan UID and users GID
+CURRENT_UID=$(id -u jovyan)
+CURRENT_GID=$(id -g jovyan)
+
+# Update jovyan's UID, if different from HOST_UID
+if [ "$HOST_UID" != "$CURRENT_UID" ]; then
     usermod -u $HOST_UID jovyan
+    # Update ownership in jovyan's home directory
+    chown -R $HOST_UID /home/jovyan
 fi
 
-# If HOST_GID is not 100, then proceed to check or create group
-if [ "$HOST_GID" != "100" ]; then
-    # Check if group with HOST_GID already exists
-    if ! getent group $HOST_GID > /dev/null; then
-        # Group doesn't exist, so create it as 'jovyan_group'
-        groupadd -g $HOST_GID jovyan_group
-        # Add jovyan user to the newly created group and make it the primary group
-        usermod -g $HOST_GID -G $HOST_GID jovyan
-    else
-        # Group exists, retrieve its name
-        EXISTING_GROUP_NAME=$(getent group $HOST_GID | cut -d: -f1)
-        # Add jovyan user to the existing group and make it the primary group
-        usermod -g $HOST_GID -G $EXISTING_GROUP_NAME jovyan
-    fi
+# Update users GID, if different from HOST_GID
+if [ "$HOST_GID" != "$CURRENT_GID" ]; then
+    groupmod -g $HOST_GID users
+    # Update group ownership in jovyan's home directory
+    chown -R :$HOST_GID /home/jovyan
 fi
 
-# Change ownership of /home/jovyan to the newly mapped UID and primary GID
-chown jovyan:$HOST_GID /home/jovyan
+# Ensure jovyan is a member of the 'users' group
+usermod -aG users jovyan

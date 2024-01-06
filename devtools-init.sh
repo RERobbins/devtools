@@ -22,8 +22,8 @@ build_rer_ml_jupyterlab() {
 
 rer_ml_jupyterlab() {
   # Set the UID and GID to match the current user
-  export NB_UID=$(id -u)
-  export NB_GID=$(id -g)
+  export HOST_UID=$(id -u)
+  export HOST_GID=$(id -g)
 
   if [ -z "$1" ] || [ "$1" = "unstructured" ]; then
     # Set environment variable to "unstructured"

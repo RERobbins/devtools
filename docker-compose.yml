@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+
 services:
   unstructured-api:
     image: quay.io/unstructured-io/unstructured-api:0.0.61
@@ -16,6 +17,9 @@ services:
     user: root
     environment:
       - GRANT_SUDO=yes
+      - HOST_UID=${HOST_UID}
+      - HOST_GID=${HOST_GID}
+
     networks:
       - mynetwork
 
