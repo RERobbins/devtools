@@ -8,7 +8,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - /home/rerobbins/projects:/home/jovyan/projects
+      - $HOME/projects:/home/jovyan/projects
     user: root
     environment:
       - GRANT_SUDO=yes
