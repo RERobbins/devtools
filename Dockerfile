@@ -1,17 +1,14 @@
-From quay.io/jupyter/pytorch-notebook:2023-12-25
+FROM quay.io/jupyter/pytorch-notebook:2024-01-05
 
 LABEL maintainer="Richard Robbins"
 
 USER root
 
-# Copy your entry script into the container
-COPY entry.sh /entry.sh
+# Copy your start-notebook script into the container
+COPY entry.sh /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
 
-# Make the entry script executable
-RUN chmod +x /entry.sh
-
-# Set the entry point to your script
-ENTRYPOINT ["/entry.sh"]
+# Make the start-notebook script is executable
+RUN chmod +x /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
 
 # Update the system and install necessary packages
 RUN apt-get update && \
