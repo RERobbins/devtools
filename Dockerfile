@@ -5,7 +5,7 @@ LABEL maintainer="Richard Robbins"
 USER root
 
 # Copy your start-notebook script into the container
-COPY entry.sh /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
+COPY fix-jovyan-id.sh /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
 
 # Make the start-notebook script is executable
 RUN chmod +x /usr/local/bin/start-notebook.d/fix-jovyan-id.sh

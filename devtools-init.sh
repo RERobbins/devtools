@@ -59,10 +59,10 @@ rer_ml_jupyterlab() {
 shutdown_rer_ml_jupyterlab() {
     if [ -z "$RER_ML_CONFIG" ] || [ "$RER_ML_CONFIG" = "unstructured" ]; then
 	# Shut down "unstructured" containers (default)
-	docker-compose -f $HOME/projects/other/devtools/docker-compose.yml down
+	docker compose -f $HOME/projects/other/devtools/docker-compose.yml down
     elif [ "$RER_ML_CONFIG" = "slender" ]; then
 	# Shut down "slender" containers
-	docker-compose -f $HOME/projects/other/devtools/docker-compose-slender.yml down
+	docker compose -f $HOME/projects/other/devtools/docker-compose-slender.yml down
     else
 	echo "Invalid configuration stored in RER_ML_CONFIG environment variable."
     fi
