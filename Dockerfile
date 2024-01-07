@@ -1,14 +1,14 @@
-FROM quay.io/jupyter/pytorch-notebook:2024-01-05
+FROM quay.io/jupyter/pytorch-notebook:2024-01-06
 
 LABEL maintainer="Richard Robbins"
 
 USER root
 
 # Copy your start-notebook script into the container
-# COPY fix-jovyan-id.sh /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
+COPY fix-jovyan-id.sh /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
 
 # Make the start-notebook script is executable
-# RUN chmod +x /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
+RUN chmod +x /usr/local/bin/start-notebook.d/fix-jovyan-id.sh
 
 # Update the system and install necessary packages
 RUN apt-get update && \
