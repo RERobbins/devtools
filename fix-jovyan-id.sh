@@ -16,14 +16,14 @@ CURRENT_GID=$(id -g jovyan)
 if [ "$HOST_UID" != "$CURRENT_UID" ]; then
     usermod -u $HOST_UID jovyan
     # Update ownership in jovyan's home directory
-    chown -R $HOST_UID /home/jovyan
+    chown $HOST_UID /home/jovyan
 fi
 
 # Update users GID, if different from HOST_GID
 if [ "$HOST_GID" != "$CURRENT_GID" ]; then
     groupmod -g $HOST_GID users
     # Update group ownership in jovyan's home directory
-    chown -R :$HOST_GID /home/jovyan
+    chown :$HOST_GID /home/jovyan
 fi
 
 # Ensure jovyan is a member of the 'users' group

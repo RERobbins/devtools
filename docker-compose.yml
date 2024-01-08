@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   unstructured-api:
-    image: quay.io/unstructured-io/unstructured-api:0.0.61
+    image: quay.io/unstructured-io/unstructured-api:0.0.62
     networks:
       - mynetwork
 
