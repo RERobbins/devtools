@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  unstructured-api:
+    image: quay.io/unstructured-io/unstructured-api:0.0.62
+    networks:
+      - mynetwork
+
+  jupyter-lab:
+    container_name: jupyter-lab
+    image: quay.io/robbins/devtools/rer_ml_jupyterlab:latest
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+    ports:
+      - "8888:8888"
+    volumes:
+      - $HOME/projects:/home/jovyan/projects
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+      - HOST_UID=${HOST_UID}
+      - HOST_GID=${HOST_GID}
+
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
