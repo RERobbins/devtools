@@ -8,11 +8,9 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - $HOME/projects:/home/${USER}/projects
+      - $HOME/projects:/home/jovyan/work
     user: root
     environment:
       - GRANT_SUDO=yes
-      - NB_USER=${USER}
-      - CHOWN_HOME=yes
-
-    working_dir: /home/${USER}
+      - NB_UID=${USER_ID}
+      - NB_GID=${USER_GID}
