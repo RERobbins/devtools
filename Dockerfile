@@ -47,7 +47,7 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
 # Clean up Conda, pip cache, and fix permissions
 RUN conda clean -afy && \
     rm -rf /root/.cache/pip && \
-    rm -f /tmp/requirements.txt \
+    rm -f /tmp/requirements.txt  && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
