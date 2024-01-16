@@ -22,19 +22,19 @@ build_rer_ml_jupyterlab() {
 
 rer_ml_jupyterlab() {
   # Set the UID and GID to match the current user
-  export HOST_UID=$(id -u)
-  export HOST_GID=$(id -g)
+  export USER_ID=$(id -u)
+  export USER_GID=$(id -g)
 
   if [ -z "$1" ] || [ "$1" = "unstructured" ]; then
     # Set environment variable to "unstructured"
     export RER_ML_CONFIG="unstructured"
     # Launch "unstructured" containers (default)
-    docker compose -f $HOME/projects/other/devtools/docker-compose.yml up -d
+    docker-compose -f $HOME/projects/other/devtools/docker-compose.yml up -d
   elif [ "$1" = "slender" ]; then
     # Set environment variable to "slender"
     export RER_ML_CONFIG="slender"
     # Launch "slender" containers
-    docker compose -f $HOME/projects/other/devtools/docker-compose-slender.yml up -d
+    docker-compose -f $HOME/projects/other/devtools/docker-compose-slender.yml up -d
   else
     # Display an error message if the argument is not recognized
     echo "Invalid argument. Usage: rer_ml_jupyterlab [unstructured|slender]"

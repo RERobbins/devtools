@@ -13,12 +13,11 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - $HOME/projects:/home/jovyan/projects
-    user: root
+      - $HOME/projects:/home/jovyan/work
     environment:
       - GRANT_SUDO=yes
-      - HOST_UID=${HOST_UID}
-      - HOST_GID=${HOST_GID}
+      - NB_UID=${USER_ID}
+      - NB_GID=${USER_GID}
 
     networks:
       - mynetwork
