@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  unstructured-api:
+    image: quay.io/unstructured-io/unstructured-api:0.0.62
+    networks:
+      - mynetwork
+
+  jupyter-lab:
+    container_name: jupyter-lab-gpu
+    image: quay.io/robbins/devtools/rer_ml_jupyterlab_gpu:latest
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+    ports:
+      - "8888:8888"
+    volumes:
+      - $HOME/projects:/home/jovyan/work
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+      - NB_UID=${USER_ID}
+      - NB_GID=${USER_GID}
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: [gpu]
+
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
