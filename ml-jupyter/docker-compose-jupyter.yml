@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   jupyter-lab:
-    container_name: jupyter-lab
-    image: quay.io/robbins/devtools/rer_ml_jupyterlab:latest
+    container_name: ml-jupyter
+    image: quay.io/robbins/ml-jupyter:latest
     command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
     ports:
       - "8888:8888"
