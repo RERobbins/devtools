@@ -1,4 +1,4 @@
-build_ml_jupyter () {
+build_ml_jupyter_gpu () {
     local DATE_TAG=$(date +%Y-%m-%d)
     local push_to_registry=${1:-true} # Default is true for pushing to the registry
     local TAG_BASE="quay.io/robbins/ml-jupyter-gpu"
@@ -6,16 +6,18 @@ build_ml_jupyter () {
 
     # Determine the build command based on whether we're pushing to registry or saving locally
     if [ "$push_to_registry" = true ] ; then
-        # Using build and push image
-        docker build \
+        # Using buildx to build and push (nvidia image will be single platform)
+        docker buildx build \
+           --platform linux/amd64 \
            -f $BUILD_DIR/Dockerfile \
            -t "$TAG_BASE:$DATE_TAG" \
            -t "$TAG_BASE:latest" \
            --push \
            $BUILD_DIR
+
     else
         # Regular docker build for local save
-        docker build \
+        docker buildx build \
            -f $BUILD_DIR/Dockerfile \
            -t "$TAG_BASE:$DATE_TAG" \
            -t "$TAG_BASE:latest" \
