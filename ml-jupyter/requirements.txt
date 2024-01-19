@@ -4,7 +4,7 @@ tqdm==4.66.1
 python-magic==0.4.27
 jupyterlab-code-formatter==2.2.1
 transformers==4.36.2
-tensorflow==2.16.0
+tensorflow==2.15.0
 torch==2.1.2
 torchvision==0.16.2
 torchaudio==2.1.2
