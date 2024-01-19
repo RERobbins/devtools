@@ -1,4 +1,4 @@
-build_ml_jupyter () {
+build-ml-jupyter () {
     local DATE_TAG=$(date +%Y-%m-%d)
     local push_to_registry=${1:-true} # Default is true for pushing to the registry
     local TAG_BASE="quay.io/robbins/ml-jupyter"
