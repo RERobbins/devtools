@@ -21,26 +21,32 @@ REPO_DEST_PAIRS=(
 )
 
 # Update package list and upgrade installed packages
+echo "Updating package list and upgrading installed packages..."
 sudo apt update
 sudo apt upgrade -y
 
 # Install Emacs
+echo "Installing Emacs..."
 sudo apt install -y emacs
 
 # Start the SSH agent
+echo "Starting the SSH agent..."
 eval "$(ssh-agent -s)"
 
 # Add the specified SSH key to the SSH agent
+echo "Adding SSH key to the SSH agent..."
 ssh-add "$HOME/.ssh/$GIT_SSH_KEY_NAME"
 
 # Configure Git
-git config --global user.email $USER_EMAIL
-git config --global user.name $USER_NAME
-git config --global core.editor $USER_EDITOR
+echo "Configuring Git..."
+git config --global user.email "$USER_EMAIL"
+git config --global user.name "$USER_NAME"
+git config --global core.editor "$USER_EDITOR"
 
 # Create subdirectories
-mkdir -p $HOME/projects/school
-mkdir -p $HOME/projects/other
+echo "Creating subdirectories..."
+mkdir -p "$HOME/projects/school"
+mkdir -p "$HOME/projects/other"
 
 # Iterate over the pairs and perform git clone
 for pair in "${REPO_DEST_PAIRS[@]}"; do
@@ -50,7 +56,9 @@ for pair in "${REPO_DEST_PAIRS[@]}"; do
     dest_dir="${parts[1]}"
 
     # Clone the repository into the specified destination directory
+    echo "Cloning repository into $dest_dir..."
     git clone "$repo_url" "$dest_dir"
+done
 
 # Iterate over the image tags and pull each image
 for image_tag in "${DOCKER_IMAGE_TAGS[@]}"; do
