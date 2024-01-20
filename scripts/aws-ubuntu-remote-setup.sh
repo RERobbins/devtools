@@ -5,20 +5,30 @@ USER_NAME="Richard Robbins"
 USER_EMAIL="richard.robbins@berkeley.edu"
 USER_EDITOR="emacs"
 
-DOCKER_IMAGE_TAGS=(
-    "quay.io/robbins/ml-jupyter:latest"
-    "quay.io/robbins/ml-jupyter-gpu:latest"
-    "quay.io/unstructured-io/unstructured-api:0.0.62"
-)
-
 REPO_ROOT=$HOME/projects
 
 REPO_DEST_PAIRS=(
-    git@github.com:RERobbins/irvine-capstone.git $REPO_ROOT/school/irvine-capstone
-    git@github.com:RERobbins/data_science_266_sandbox.git $REPO_ROOT/school/data_science_266_sandbox
-    git@github.com:RERobbins/devtools.git $REPO_ROOT/other/devtools
-    git@github.com:RERobbins/LangChain.git $REPO_ROOT/other/LangChain
+    "git@github.com:RERobbins/irvine-capstone.git $REPO_ROOT/school/"
+    "git@github.com:RERobbins/data_science_266_sandbox.git $REPO_ROOT/school/"
+    "git@github.com:RERobbins/devtools.git $REPO_ROOT/other/"
+    "git@github.com:RERobbins/LangChain.git $REPO_ROOT/other/"
 )
+
+# Specify the desired umask value (e.g., 002 for 755 permissions on directories)
+UMASK_VALUE="002"
+
+# Check if the umask is already set in ~/.bashrc
+if ! grep -q "umask" $HOME/.bashrc; then
+    # If umask is not set, add it to ~/.bashrc
+    echo "umask $UMASK_VALUE" >> $HOME/.bashrc
+    echo "Added umask to $HOME/.bashrc"
+else
+    # If umask is already set, update its value in ~/.bashrc
+    sed -i "s/^umask .*/umask $UMASK_VALUE/" $HOME/.bashrc
+    echo "Updated umask in $HOME/.bashrc"
+fi
+
+source $HOME/.bashrc
 
 # Update package list and upgrade installed packages
 echo "Updating package list and upgrading installed packages..."
@@ -56,14 +66,9 @@ for pair in "${REPO_DEST_PAIRS[@]}"; do
     dest_dir="${parts[1]}"
 
     # Clone the repository into the specified destination directory
-    echo "Cloning repository into $dest_dir..."
-    git clone "$repo_url" "$dest_dir"
-done
-
-# Iterate over the image tags and pull each image
-for image_tag in "${DOCKER_IMAGE_TAGS[@]}"; do
-    echo "Pulling Docker image: $image_tag"
-    docker pull "$image_tag"
+    echo "Cloning repository $repo_url into $dest_dir..."
+    cd "$dest_dir"
+    git clone "$repo_url"
 done
 
 echo "Setup completed!"
