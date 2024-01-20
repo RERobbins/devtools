@@ -1,5 +1,7 @@
 #!/bin/bash
+umask 002
 
+# You should only need to modify the next four definitions
 GIT_SSH_KEY_NAME="capstone_ed25519"
 USER_NAME="Richard Robbins"
 USER_EMAIL="richard.robbins@berkeley.edu"
@@ -14,7 +16,6 @@ REPO_DEST_PAIRS=(
     "git@github.com:RERobbins/LangChain.git $REPO_ROOT/other/"
 )
 
-
 COMMON_DOCKER_CONTAINERS=(
     "quay.io/unstructured-io/unstructured-api:0.0.62"
 )
@@ -26,22 +27,6 @@ GPU_DOCKER_CONTAINERS=(
 NON_GPU_DOCKER_CONTAINERS=(
     "quay.io/robbins/ml-jupyter:latest"
 )
-
-# Specify the desired umask value (e.g., 002 for 755 permissions on directories)
-UMASK_VALUE="002"
-
-# Check if the umask is already set in ~/.bashrc
-if ! grep -q "umask" $HOME/.bashrc; then
-    # If umask is not set, add it to ~/.bashrc
-    echo "umask $UMASK_VALUE" >> $HOME/.bashrc
-    echo "Added umask to $HOME/.bashrc"
-else
-    # If umask is already set, update its value in ~/.bashrc
-    sed -i "s/^umask .*/umask $UMASK_VALUE/" $HOME/.bashrc
-    echo "Updated umask in $HOME/.bashrc"
-fi
-
-source $HOME/.bashrc
 
 # Update package list and upgrade installed packages
 echo "Updating package list and upgrading installed packages..."
