@@ -14,6 +14,19 @@ REPO_DEST_PAIRS=(
     "git@github.com:RERobbins/LangChain.git $REPO_ROOT/other/"
 )
 
+
+COMMON_DOCKER_CONTAINERS=(
+    "quay.io/unstructured-io/unstructured-api:0.0.62"
+)
+
+GPU_DOCKER_CONTAINERS=(
+    "quay.io/robbins/ml-jupyter-gpu:latest"
+)
+
+NON_GPU_DOCKER_CONTAINERS=(
+    "quay.io/robbins/ml-jupyter:latest"
+)
+
 # Specify the desired umask value (e.g., 002 for 755 permissions on directories)
 UMASK_VALUE="002"
 
@@ -70,5 +83,38 @@ for pair in "${REPO_DEST_PAIRS[@]}"; do
     cd "$dest_dir"
     git clone "$repo_url"
 done
+
+# Check if NVIDIA GPU is present
+if nvidia-smi &>/dev/null; then
+    # NVIDIA GPU is present, set a variable to indicate GPU presence
+    HAS_GPU=true
+    echo "NVIDIA GPU is present."
+else
+    # No NVIDIA GPU detected, set a variable to indicate no GPU
+    HAS_GPU=false
+    echo "No NVIDIA GPU detected."
+fi
+
+# Pull Docker containers (always)
+echo "Pulling common Docker containers..."
+for image in "${COMMON_DOCKER_CONTAINERS[@]}"; do
+    docker pull "$image"
+done
+
+# Check if NVIDIA GPU is present and pull GPU-specific containers
+if [ "$HAS_GPU" = true ]; then
+    echo "Pulling GPU-specific Docker containers..."
+    for image in "${GPU_DOCKER_CONTAINERS[@]}"; do
+        docker pull "$image"
+    done
+fi
+
+# Check if there is no NVIDIA GPU and pull non-GPU containers
+if [ "$HAS_GPU" = false ]; then
+    echo "Pulling non-GPU Docker containers..."
+    for image in "${NON_GPU_DOCKER_CONTAINERS[@]}"; do
+        docker pull "$image"
+    done
+fi
 
 echo "Setup completed!"
