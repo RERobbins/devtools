@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# You should only need to modify the next two definitions
+# You should only need to modify the next three definitions
 SSH_KEY_PATH="$HOME/.ssh/irvine-capstone-rer-key-pair.pem"
 GIT_SSH_KEY_PATH="$HOME/.ssh/capstone_ed25519"
+LOCAL_SETUP_SCRIPT_PATH="$HOME/projects/other/devtools/scripts/aws-ubuntu-remote-setup.sh"
 
 # Check for the correct number of parameters
 if [ "$#" -lt 1 ]; then
@@ -13,7 +14,6 @@ fi
 # Other Configuration
 INSTANCE_IP="$1"
 REMOTE_USER="${2:-ubuntu}"  # Default to "ubuntu"
-LOCAL_SETUP_SCRIPT_PATH="$HOME/projects/other/devtools/scripts/aws-ubuntu-remote-setup.sh"
 
 # Copy SSH keys to the remote instance
 echo "Copying Github SSH keys to the remote instance..."
