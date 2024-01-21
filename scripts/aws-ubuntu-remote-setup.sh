@@ -73,7 +73,7 @@ done
 
 # All container related setup has been moved back into the AMI setup phase
 
-Check if NVIDIA GPU is present
+# Check if NVIDIA GPU is present
 if nvidia-smi &>/dev/null; then
     # NVIDIA GPU is present, set a variable to indicate GPU presence
     HAS_GPU=true
