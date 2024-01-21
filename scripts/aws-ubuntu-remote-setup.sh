@@ -37,13 +37,23 @@ sudo apt upgrade -y
 echo "Installing Emacs..."
 sudo apt install -y emacs
 
-# Start the SSH agent
-echo "Starting the SSH agent..."
-eval "$(ssh-agent -s)"
+# Define the path to the SSH config file
+ssh_config_file="$HOME/.ssh/config"
 
-# Add the specified SSH key to the SSH agent
-echo "Adding SSH key to the SSH agent..."
-ssh-add "$HOME/.ssh/$GIT_SSH_KEY_NAME"
+# Append or create the SSH config entry for GitHub
+cat <<EOL >> "$ssh_config_file"
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/$GIT_SSH_KEY_NAME
+EOL
+
+echo "SSH config file has been updated with GitHub SSH key settings for $GIT_SSH_KEY_NAME."
+
+# Set appropriate permissions for the SSH config file
+chmod 600 "$ssh_config_file"
+
+echo "Permissions for SSH config file have been set."
 
 # Configure Git
 echo "Configuring Git..."
