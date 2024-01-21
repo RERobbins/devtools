@@ -13,7 +13,7 @@ launch-ml-jupyter-gpu () {
     return 1
   fi
   export ML_JUPYTER_GPU_DOCKER_COMPOSE_FILE="$ML_JUPYTER_GPU_CONFIG_DIR/docker-compose-$config_type.yml"
-  docker compose pull -f $ML_JUPYTER_DOCKER_COMPOSE_FILE
+  docker compose pull -f $ML_JUPYTER_GPU_DOCKER_COMPOSE_FILE
   docker compose -f $ML_JUPYTER_GPU_DOCKER_COMPOSE_FILE up -d
 }
 
