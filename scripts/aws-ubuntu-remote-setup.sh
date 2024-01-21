@@ -25,7 +25,7 @@ echo "Updating package list and upgrading installed packages..."
 sudo apt update
 sudo apt upgrade -y
 
-# Installatino of Emacs has been moved back into the AMI setup phase
+# Installation of Emacs has been moved back into the AMI setup phase
 # echo "Installing Emacs..."
 # sudo apt install -y emacs
 
@@ -73,16 +73,27 @@ done
 
 # All container related setup has been moved back into the AMI setup phase
 
-# Check if NVIDIA GPU is present
-#if nvidia-smi &>/dev/null; then
-#    # NVIDIA GPU is present, set a variable to indicate GPU presence
-#    HAS_GPU=true
-#    echo "NVIDIA GPU is present."
-#else
-#    # No NVIDIA GPU detected, set a variable to indicate no GPU
-#    HAS_GPU=false
-#    echo "No NVIDIA GPU detected."
-#fi
+Check if NVIDIA GPU is present
+if nvidia-smi &>/dev/null; then
+    # NVIDIA GPU is present, set a variable to indicate GPU presence
+    HAS_GPU=true
+    echo "NVIDIA GPU is present."
+else
+    # No NVIDIA GPU detected, set a variable to indicate no GPU
+    HAS_GPU=false
+    echo "No NVIDIA GPU detected."
+fi
+
+# Modify .bashrc to source the appropriate script based on GPU presence
+if [ "$HAS_GPU" = true ]; then
+    # Add a line to source the GPU-specific script
+    echo "source $REPO_ROOT/other/devtools/ml-jupyter-gpu/manage-ml-jupyter-gpu.sh" >> $HOME/.bashrc
+    echo "Added source line for GPU-specific script to ~/.bashrc"
+else
+    # Add a line to source the non-GPU script
+    echo "source $REPO_ROOT/other/devtools/ml-jupyter/manage-ml-jupyter.sh" >> $HOME/.bashrc
+    echo "Added source line for non-GPU script to ~/.bashrc"
+fi
 
 # Pull Docker containers (always)
 #echo "Pulling common Docker containers..."
