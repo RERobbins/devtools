@@ -4,38 +4,30 @@ umask 002
 # You should only need to modify the next four definitions
 GIT_SSH_KEY_NAME="capstone_ed25519"
 USER_NAME="Richard Robbins"
-USER_EMAIL="rerobbins@itinker.net"
+USER_EMAIL="RERobbins@itinker.net"
 USER_EDITOR="emacs"
 
 REPO_ROOT=$HOME/projects
 
 REPO_DEST_PAIRS=(
     "git@github.com:RERobbins/irvine-capstone.git $REPO_ROOT/school/"
-    "git@github.com:RERobbins/data_science_266_sandbox.git $REPO_ROOT/school/"
     "git@github.com:RERobbins/devtools.git $REPO_ROOT/other/"
-    "git@github.com:RERobbins/LangChain.git $REPO_ROOT/other/"
 )
 
-COMMON_DOCKER_CONTAINERS=(
-    "quay.io/unstructured-io/unstructured-api:0.0.62"
-)
 
-GPU_DOCKER_CONTAINERS=(
-    "quay.io/robbins/ml-jupyter-gpu:latest"
-)
-
-NON_GPU_DOCKER_CONTAINERS=(
-    "quay.io/robbins/ml-jupyter:latest"
-)
+# Container setup has been moved back into the AMI setup phase 
+# COMMON_DOCKER_CONTAINERS=()
+# GPU_DOCKER_CONTAINERS=("quay.io/robbins/ml-jupyter-gpu:latest")
+# NON_GPU_DOCKER_CONTAINERS=("quay.io/robbins/ml-jupyter:latest")
 
 # Update package list and upgrade installed packages
 echo "Updating package list and upgrading installed packages..."
 sudo apt update
 sudo apt upgrade -y
 
-# Install Emacs
-echo "Installing Emacs..."
-sudo apt install -y emacs
+# Installatino of Emacs has been moved back into the AMI setup phase
+# echo "Installing Emacs..."
+# sudo apt install -y emacs
 
 # Define the path to the SSH config file
 ssh_config_file="$HOME/.ssh/config"
@@ -79,37 +71,39 @@ for pair in "${REPO_DEST_PAIRS[@]}"; do
     git clone "$repo_url"
 done
 
+# All container related setup has been moved back into the AMI setup phase
+
 # Check if NVIDIA GPU is present
-if nvidia-smi &>/dev/null; then
-    # NVIDIA GPU is present, set a variable to indicate GPU presence
-    HAS_GPU=true
-    echo "NVIDIA GPU is present."
-else
-    # No NVIDIA GPU detected, set a variable to indicate no GPU
-    HAS_GPU=false
-    echo "No NVIDIA GPU detected."
-fi
+#if nvidia-smi &>/dev/null; then
+#    # NVIDIA GPU is present, set a variable to indicate GPU presence
+#    HAS_GPU=true
+#    echo "NVIDIA GPU is present."
+#else
+#    # No NVIDIA GPU detected, set a variable to indicate no GPU
+#    HAS_GPU=false
+#    echo "No NVIDIA GPU detected."
+#fi
 
 # Pull Docker containers (always)
-echo "Pulling common Docker containers..."
-for image in "${COMMON_DOCKER_CONTAINERS[@]}"; do
-    docker pull "$image"
-done
+#echo "Pulling common Docker containers..."
+#for image in "${COMMON_DOCKER_CONTAINERS[@]}"; do
+#    docker pull "$image"
+#done
 
 # Check if NVIDIA GPU is present and pull GPU-specific containers
-if [ "$HAS_GPU" = true ]; then
-    echo "Pulling GPU-specific Docker containers..."
-    for image in "${GPU_DOCKER_CONTAINERS[@]}"; do
-        docker pull "$image"
-    done
-fi
+#if [ "$HAS_GPU" = true ]; then
+#    echo "Pulling GPU-specific Docker containers..."
+#    for image in "${GPU_DOCKER_CONTAINERS[@]}"; do
+#        docker pull "$image"
+#    done
+#fi
 
 # Check if there is no NVIDIA GPU and pull non-GPU containers
-if [ "$HAS_GPU" = false ]; then
-    echo "Pulling non-GPU Docker containers..."
-    for image in "${NON_GPU_DOCKER_CONTAINERS[@]}"; do
-        docker pull "$image"
-    done
-fi
+#if [ "$HAS_GPU" = false ]; then
+#    echo "Pulling non-GPU Docker containers..."
+#    for image in "${NON_GPU_DOCKER_CONTAINERS[@]}"; do
+#        docker pull "$image"
+#    done
+#fi
 
 echo "Setup completed!"

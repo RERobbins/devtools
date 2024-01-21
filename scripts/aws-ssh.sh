@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # You should only need to modify the following definition
-SSH_KEY_PATH="$HOME/.ssh/RERobbins-key-pair.pem"
+SSH_KEY_PATH="$HOME/.ssh/irvine-capstone-rer-key-pair.pem"
 
 # Check for the correct number of parameters
 if [ "$#" -lt 1 ]; then
