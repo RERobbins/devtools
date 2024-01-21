@@ -4,7 +4,7 @@ umask 002
 # You should only need to modify the next four definitions
 GIT_SSH_KEY_NAME="capstone_ed25519"
 USER_NAME="Richard Robbins"
-USER_EMAIL="richard.robbins@berkeley.edu"
+USER_EMAIL="rerobbins@itinker.net"
 USER_EDITOR="emacs"
 
 REPO_ROOT=$HOME/projects
