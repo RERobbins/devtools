@@ -26,24 +26,24 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
 
 # Create Conda environments for Python 3.8, 3.9, and 3.10 as desired and install necessary packages in each environment
 # ARG env_names="python_3.8 python_3.9 python_3.10"
-ARG env_names="python_3.10"
+# ARG env_names="python_3.10"
 
-RUN for env_name in $env_names; do \
-        case $env_name in \
-            python_3.8) py_ver=3.8;; \
-            python_3.9) py_ver=3.9;; \
-            python_3.10) py_ver=3.10;; \
-            python_3.11) py_ver=3.11;; \
-        esac; \
-        mamba create --yes -p "${CONDA_DIR}/envs/${env_name}" \
-        python=${py_ver} \
-        'ipykernel' \
-        'jupyterlab' && \
-        "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --name="${env_name}" && \
-        "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir -r /tmp/requirements.txt; \
-     done && \
-     mamba clean --all -f -y && \
-     rm -f /tmp/requirements.txt
+# RUN for env_name in $env_names; do \
+#        case $env_name in \
+#            python_3.8) py_ver=3.8;; \
+#            python_3.9) py_ver=3.9;; \
+#            python_3.10) py_ver=3.10;; \
+#            python_3.11) py_ver=3.11;; \
+#        esac; \
+#        mamba create --yes -p "${CONDA_DIR}/envs/${env_name}" \
+#        python=${py_ver} \
+#        'ipykernel' \
+#        'jupyterlab' && \
+#        "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --name="${env_name}" && \
+#        "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir -r /tmp/requirements.txt; \
+#     done && \
+#     mamba clean --all -f -y && \
+#     rm -f /tmp/requirements.txt
 
 # Clean up Conda, pip cache, and fix permissions
 RUN conda clean -afy && \
