@@ -2,10 +2,10 @@
 umask 002
 
 # You should only need to modify the next four definitions
-GIT_SSH_KEY_NAME="capstone_ed25519"
-USER_NAME="Richard Robbins"
-USER_EMAIL="RERobbins@itinker.net"
-USER_EDITOR="emacs"
+GIT_SSH_KEY_NAME="id_ed25519"
+USER_NAME="your name you use on git here"
+USER_EMAIL="your git email address here"
+USER_EDITOR="nano"
 
 REPO_ROOT=$HOME/projects
 

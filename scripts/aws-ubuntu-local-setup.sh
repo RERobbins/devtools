@@ -2,7 +2,7 @@
 
 # You should only need to modify the next three definitions
 SSH_KEY_PATH="$HOME/.ssh/irvine-capstone-rer-key-pair.pem"
-GIT_SSH_KEY_PATH="$HOME/.ssh/capstone_ed25519"
+GIT_SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
 LOCAL_SETUP_SCRIPT_PATH="$HOME/projects/other/devtools/scripts/aws-ubuntu-remote-setup.sh"
 
 # Check for the correct number of parameters
