@@ -20,14 +20,12 @@ services:
       - GRANT_SUDO=yes
       - NB_UID=${USER_ID}
       - NB_GID=${USER_GID}
-      - NVIDIA_VISIBLE_DEVICES=all
     deploy:
       resources:
         reservations:
           devices:
-          - driver: nvidia
-            capabilities: [gpu]
-
+            - driver: nvidia
+              capabilities: [gpu]
     networks:
       - mynetwork
 
