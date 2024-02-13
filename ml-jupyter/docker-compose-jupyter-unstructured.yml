@@ -20,7 +20,8 @@ services:
       - GRANT_SUDO=yes
       - NB_UID=${USER_ID}
       - NB_GID=${USER_GID}
-
+      - REPO_ROOT=/home/jovyan/work/
+      
     networks:
       - mynetwork
 
