@@ -4,6 +4,9 @@ services:
   unstructured-api:
     container_name: unstructured
     image: quay.io/unstructured-io/unstructured-api:latest
+    command: ["--port", "8000", "--host", "0.0.0.0"]
+    ports:
+      - "8000:8000"
     networks:
       - mynetwork
 
@@ -21,7 +24,6 @@ services:
       - NB_UID=${USER_ID}
       - NB_GID=${USER_GID}
       - REPO_ROOT=/home/jovyan/work/
-      
     networks:
       - mynetwork
 
