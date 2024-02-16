@@ -24,6 +24,7 @@ services:
       - NB_UID=${USER_ID}
       - NB_GID=${USER_GID}
       - REPO_ROOT=/home/jovyan/work/
+      - PYTHONPATH=/home/jovyan/work/school/irvine-capstone
 
     deploy:
       resources:
