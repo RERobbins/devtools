@@ -1,0 +1,19 @@
+version: '3.8'
+
+# add something like the following to mount a local directory
+#    volumes:
+#      - $HOME/projects:/home/jovyan/work
+
+services:
+  jupyter-lab:
+    container_name: ml-jupyter-lean
+    image: quay.io/robbins/ml-jupyter-lean:latest
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+    ports:
+      - "8888:8888"
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+      - NB_UID=${USER_ID}
+      - NB_GID=${USER_GID}
+
