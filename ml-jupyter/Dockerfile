@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/pytorch-notebook:2024-01-21
+FROM quay.io/jupyter/pytorch-notebook:2024-02-13
 
 LABEL maintainer="Richard Robbins"
 
