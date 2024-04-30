@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jupyter-lab:
     container_name: ml-jupyter

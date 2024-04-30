@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   unstructured-api:
     container_name: unstructured
