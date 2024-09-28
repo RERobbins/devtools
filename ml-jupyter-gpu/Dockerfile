@@ -1,4 +1,4 @@
-FROM cschranz/gpu-jupyter:v1.6_cuda-12.0_ubuntu-22.04_python-only
+FROM cschranz/gpu-jupyter:v1.7_cuda-12.2_ubuntu-22.04_python-only
 
 LABEL maintainer="Richard Robbins"
 
