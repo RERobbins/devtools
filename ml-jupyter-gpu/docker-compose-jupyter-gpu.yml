@@ -1,23 +1,18 @@
 services:
-  jupyter-lab:
-    container_name: ml-jupyter-gpu
+  ml-jupyter:
     image: quay.io/robbins/ml-jupyter-gpu:latest
-    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
     ports:
       - "8888:8888"
-    volumes:
-      - $HOME/projects:/home/jovyan/work
-    user: root
     environment:
-      - GRANT_SUDO=yes
-      - NB_UID=${USER_ID}
-      - NB_GID=${USER_GID}
-      - REPO_ROOT=/home/jovyan/work/
-      - PYTHONPATH=/home/jovyan/work/school/irvine-capstone
-
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      - /home/rerobbins:/home/dockeruser
+      - /models:/models
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              capabilities: [gpu]
+              count: all
+              capabilities: [compute, utility]

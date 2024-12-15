@@ -1,0 +1,67 @@
+FROM nvcr.io/nvidia/pytorch:24.07-py3
+
+LABEL maintainer="Richard Robbins"
+
+# General apt-get update, upgrade, and install sequence with cleanup
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        emacs-nox && \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy the requirements.txt file to the container
+COPY requirements.txt /tmp/requirements.txt
+
+# Upgrade pip, install packages from requirements.txt, upgrade Jupyter ecosystem, install TensorBoard, and clean up
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r /tmp/requirements.txt && \
+    pip install --upgrade jupyter jupyterlab tensorboard IPython ipywidgets jupyter_client jupyter_core jupyter_server nbclient nbconvert nbformat notebook qtconsole traitlets && \
+    rm /tmp/requirements.txt && \
+    rm -rf /root/.cache/pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+    
+# Disable the jupyter_tensorboard extension if it exists
+RUN jupyter server extension disable jupyter_tensorboard || echo "jupyter_tensorboard extension not found" && \
+    pip uninstall -y jupyter-tensorboard || echo "jupyter-tensorboard not installed"
+
+# Unset the NODE_OPTIONS to fix the Node.js warning
+RUN unset NODE_OPTIONS
+
+# Create the user and set ownership of the home directory
+ARG NB_USER=dockeruser
+ARG NB_UID=1000
+ENV USER=${NB_USER}
+ENV HOME=/home/${NB_USER}
+
+RUN useradd -m -s /bin/bash -N -u ${NB_UID} ${NB_USER} && \
+    chown -R ${NB_USER}:users ${HOME}
+
+WORKDIR ${HOME}
+
+# Update Jupyter config to use ServerApp instead of NotebookApp, and create .jupyter directory
+RUN mkdir -p /home/${NB_USER}/.jupyter && \
+    echo "c.ServerApp.allow_root = True" >> /home/${NB_USER}/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.ip = '0.0.0.0'" >> /home/${NB_USER}/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.port = 8888" >> /home/${NB_USER}/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.token = ''" >> /home/${NB_USER}/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.password = ''" >> /home/${NB_USER}/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.custom_display_url = 'http://127.0.0.1:8888'" >> /home/${NB_USER}/.jupyter/jupyter_server_config.py && \
+    chown -R ${NB_USER}:users /home/${NB_USER}/.jupyter
+
+# Expose Jupyter port
+EXPOSE 8888
+
+# Switch to the NB_USER (dockeruser) before running the Jupyter Lab command
+USER ${NB_USER}
+
+# Set up Jupyter Lab to run on container start
+CMD ["jupyter-lab", "--no-browser"]
+
+# Optionally, install additional language servers for JupyterLab (uncomment if needed)
+# RUN npm install -g bash-language-server python-language-server
+

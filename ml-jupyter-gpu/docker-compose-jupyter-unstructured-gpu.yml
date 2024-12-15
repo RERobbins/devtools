@@ -1,37 +1,27 @@
 services:
-  unstructured-api:
-    container_name: unstructured
-    image: quay.io/unstructured-io/unstructured-api:latest
-    command: ["--port", "8000", "--host", "0.0.0.0"]
-    ports:
-      - "8000:8000"
-    networks:
-      - mynetwork
-
-  jupyter-lab:
-    container_name: ml-jupyter-gpu
-    image: quay.io/robbins/ml-jupyter-gpu:latest
-    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
+  jupyter-unstructured:
+    image: quay.io/robbins/ml-jupyter-unstructured-gpu:latest
     ports:
       - "8888:8888"
     volumes:
-      - $HOME/projects:/home/jovyan/work
-    user: root
-    environment:
-      - GRANT_SUDO=yes
-      - NB_UID=${USER_ID}
-      - NB_GID=${USER_GID}
-      - REPO_ROOT=/home/jovyan/work/
-      - PYTHONPATH=/home/jovyan/work/school/irvine-capstone
-
+      - /path/to/unstructured-data:/home/jovyan/data  # Persist unstructured data
     deploy:
       resources:
         reservations:
           devices:
-            - driver: nvidia
-              capabilities: [gpu]
+            - capabilities: [gpu]
+    runtime: nvidia
     networks:
-      - mynetwork
+      - unstructured-net
+
+  additional-service:  # Example additional container for unstructured work
+    image: some/other-image:latest
+    environment:
+      - SOME_ENV_VAR=some_value
+    networks:
+      - unstructured-net
 
 networks:
-  mynetwork:
+  unstructured-net:
+    driver: bridge
+
