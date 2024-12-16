@@ -6,7 +6,8 @@ docker run --gpus all \
   --ulimit stack=67108864 \
   -e NVIDIA_VISIBLE_DEVICES=all \
   -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
-  -v /home/rerobbins:/home/dockeruser \
+  -v $HOME/projects:/home/jovyan/work \
   -v /models:/models \
   -p 8888:8888 \
-  quay.io/robbins/ml-jupyter-gpu:latest
+  quay.io/jupyter/pytorch-notebook:cuda12-ubuntu-24.04
+

@@ -2,13 +2,12 @@ services:
   ml-jupyter:
     image: quay.io/robbins/ml-jupyter-gpu:latest
     ports:
-      - 8888:8888
+      - "8888:8888"
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-      - JUPYTER_ENABLE_LAB=yes
     volumes:
-      - /home/rerobbins/projects:/home/jovyan/work
+      - /home/rerobbins:/home/dockeruser
       - /models:/models
     deploy:
       resources:
