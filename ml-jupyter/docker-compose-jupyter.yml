@@ -1,16 +1,11 @@
 services:
-  jupyter-lab:
-    container_name: ml-jupyter
+  ml-jupyter:
     image: quay.io/robbins/ml-jupyter:latest
+    container_name: ml-jupyter
     command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
     ports:
-      - "8888:8888"
-    volumes:
-      - $HOME/projects:/home/jovyan/work
-    user: root
+      - 8888:8888
     environment:
-      - GRANT_SUDO=yes
-      - NB_UID=${USER_ID}
-      - NB_GID=${USER_GID}
-      - REPO_ROOT=/home/jovyan/work/
-      - PYTHONPATH=/home/jovyan/work/school/irvine-capstone
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - /home/rerobbins/projects:/home/jovyan/work
