@@ -1,6 +1,8 @@
 services:
   ml-jupyter:
     image: quay.io/robbins/ml-jupyter-gpu:latest
+    container_name: ml-jupyter-gpu
+    command: start-notebook.py --NotebookApp.token='' --no-browser --ip=0.0.0.0
     ports:
       - 8888:8888
     environment:
