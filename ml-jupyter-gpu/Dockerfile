@@ -9,7 +9,7 @@ USER root
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends emacs-nox tzdata  && \
+    apt-get install -y --no-install-recommends emacs-nox tzdata && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
